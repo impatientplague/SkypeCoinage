@@ -33,20 +33,20 @@ class Coin:
 		self.context.Chat.SendMessage(temp[:-2])
 
 
-	def ParseAnswer(self, Message, query):
-		if query.lower() == self.currentAnswer.lower():
-			try:
-				self.scoreboard[Message.FromHandle] = int(self.scoreboard[Message.FromHandle]) + 1
-			except KeyError:
-				self.scoreboard[Message.FromHandle] = 1
-			Message.Chat.SendMessage("/me {0}[{1}] is Correct! A: {2}".format(Message.FromHandle, str(self.scoreboard[Message.FromHandle]), self.currentAnswer))
-			self.SaveScores()
-			if self.mode == 'shuffle':
-				self.SetShuffle()
-			else:
-				self.SetQuestion()
-		else:
-			pass
+	#def ParseAnswer(self, Message, query):
+		#if query.lower() == self.currentAnswer.lower():
+			#try:
+				#self.scoreboard[Message.FromHandle] = int(self.scoreboard[Message.FromHandle]) + 1
+			#except KeyError:
+				#self.scoreboard[Message.FromHandle] = 1
+			#Message.Chat.SendMessage("/me {0}[{1}] is Correct! A: {2}".format(Message.FromHandle, str(self.scoreboard[Message.FromHandle]), self.currentAnswer))
+			#self.SaveScores()
+			#if self.mode == 'shuffle':
+				#self.SetShuffle()
+			#else:
+				#self.SetQuestion()
+		#else:
+			#pass
 
 	def GetUser(self):
 		self.context.Chat.SendMessage('/me ' + self.context.FromHandle)
