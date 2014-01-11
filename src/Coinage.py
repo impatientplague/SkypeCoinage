@@ -66,7 +66,10 @@ class Coin:
 	
 	def checkbal(self):
 		coin = coolpoints.Coolpoints(self.context.FromHandle, '')
-		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + str(self.accounts[self.context.FromHandle])) 
+		try:
+		    self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + str(self.accounts[self.context.FromHandle])) 
+		except KeyError:
+		    self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + "Error: Checking your bank account , please tell banker") 
 	
 	functions = {
 	"!register":		Reg, 
