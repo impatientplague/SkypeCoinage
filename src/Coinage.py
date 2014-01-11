@@ -18,6 +18,7 @@ class Coin:
 		self.start = time.clock()
 		self.mode = ''
 		self.context = ''
+		self.accounts = db['Accounts']
 
 	def RunFunction(self, Message, Status):
 		if Status == 'SENT' or Status == 'RECEIVED':
@@ -54,21 +55,22 @@ class Coin:
 		self.context.Chat.SendMessage('/me ' + self.context.FromHandle)
 
 	
-	def Reg(self):	
-		coin = coolpoints.Coolpoints(self.context.FromHandle, 100)
+	def Reg(self):
+	    coin = coolpoints.Coolpoints(self.context.FromHandle, 100)
+	    if not coin.check(self.context.FromHandle):
 		coin.register()
 		coin.dump()
 		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " has successfully opened an account , here take this welcome package of [100CP]")
-	    
-		
-	#def checkbal(self):
-		#coin = coolpoints.Coolpoints(self.context.FromHandle, '')
-		#bal = str(coin.balance)
-		#self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + bal) 
-		
+	    else:
+		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " has already opened an account!")
+	
+	def checkbal(self):
+		coin = coolpoints.Coolpoints(self.context.FromHandle, '')
+		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + str(self.accounts[self.context.FromHandle])) 
+	
 	functions = {
 	"!register":		Reg, 
-	#"!balance":             checkbal,
+	"!balance":             checkbal,
 	"!commands":            PrintCommands,
 	}
 

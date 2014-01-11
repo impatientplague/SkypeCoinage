@@ -1,4 +1,5 @@
 import json
+import Coinage
 
 
 with open('data/users.json') as f:
@@ -17,7 +18,19 @@ class Coolpoints(object):
                
     def register(self):
         self.db['Accounts'][self.name] = self.coins
-
+    
+    def check(self, uname):
+        if uname in self.db['Accounts']:
+            return True
+        else:
+            return False
+    
+    def give(self, g, r, a):
+        if self.db['Accounts'][g] > 0:
+            print 'more monies'
+        else:
+            print 'no monies'
+            
         
     #def addcoin(self, num):
         #num2 = self.db.get(self.name)
