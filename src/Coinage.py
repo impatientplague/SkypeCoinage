@@ -19,6 +19,7 @@ class Coin:
 		self.mode = ''
 		self.context = ''
 		self.accounts = db['Accounts']
+		self.listen = False
 
 	def RunFunction(self, Message, Status):
 		if Status == 'SENT' or Status == 'RECEIVED':
@@ -27,7 +28,7 @@ class Coin:
 				self.context = Message
 				self.functions[cmd](self)
 			elif self.listen:
-				self.ParseAnswer(Message, Message.Body)
+				print self.ParseAnswer(Message, Message.Body)
 
 	def PrintCommands(self):
 		temp = 'Commands: '
@@ -68,7 +69,7 @@ class Coin:
 		coin = coolpoints.Coolpoints(self.context.FromHandle, '')
 		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + str(self.accounts[self.context.FromHandle])) 
 		
-	
+	    
 	functions = {
 	"!register":		Reg, 
 	"!balance":             checkbal,
