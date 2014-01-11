@@ -1,8 +1,11 @@
 from modules import *
 import Skype4Py
 import time
-import pickledb
+import json
 
+with open('users.json') as f:
+    db = json.load(f)
+    
 class Coin:
 	def __init__(self):
 		self.skype = Skype4Py.Skype()
@@ -15,7 +18,6 @@ class Coin:
 		self.start = time.clock()
 		self.mode = ''
 		self.context = ''
-		self.db = pickledb.load('coinage.db', False)
 
 	def RunFunction(self, Message, Status):
 		if Status == 'SENT' or Status == 'RECEIVED':
@@ -53,18 +55,21 @@ class Coin:
 
 	
 	def Reg(self):	
+	    if db['Accounts'] == self.context.FromHandle:
 		coin = coolpoints.Coolpoints(self.context.FromHandle, 100)
 		coin.register()
 		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " has successfully opened an account , here take this welcome package of [100CP]")
+	    else:
+		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " already has an account!")
 		
-	def checkbal(self):
-		coin = coolpoints.Coolpoints(self.context.FromHandle, '')
-		bal = str(coin.balance)
-		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + bal) 
+	#def checkbal(self):
+		#coin = coolpoints.Coolpoints(self.context.FromHandle, '')
+		#bal = str(coin.balance)
+		#self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " [Balance]: " + bal) 
 		
 	functions = {
 	"!register":		Reg, 
-	"!balance":             checkbal,
+	#"!balance":             checkbal,
 	"!commands":            PrintCommands,
 	}
 
