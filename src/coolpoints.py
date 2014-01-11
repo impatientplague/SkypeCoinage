@@ -1,17 +1,24 @@
 import json
 
-with open('users.json') as f:
+
+with open('data/users.json') as f:
     db = json.load(f)
     
 class Coolpoints(object):
     def __init__(self, name, coins):
         self.name = name
         self.coins = coins
-        self.db = db
-
+        self.db = db  
+        
+    def dump(self):
+        data = self.db
+        with open('data/users.json', 'w') as outfile:
+                    json.dump(data, outfile)           
+               
     def register(self):
         self.db['Accounts'][self.name] = self.coins
-    
+
+        
     #def addcoin(self, num):
         #num2 = self.db.get(self.name)
         #addit = num + num2

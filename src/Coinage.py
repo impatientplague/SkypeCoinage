@@ -1,9 +1,9 @@
-from modules import *
 import Skype4Py
 import time
 import json
+import coolpoints
 
-with open('users.json') as f:
+with open('data/users.json') as f:
     db = json.load(f)
     
 class Coin:
@@ -55,12 +55,11 @@ class Coin:
 
 	
 	def Reg(self):	
-	    if db['Accounts'] == self.context.FromHandle:
 		coin = coolpoints.Coolpoints(self.context.FromHandle, 100)
 		coin.register()
+		coin.dump()
 		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " has successfully opened an account , here take this welcome package of [100CP]")
-	    else:
-		self.context.Chat.SendMessage("/me [Bank of CoolPoints]: " + self.context.FromHandle + " already has an account!")
+	    
 		
 	#def checkbal(self):
 		#coin = coolpoints.Coolpoints(self.context.FromHandle, '')
